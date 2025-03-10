@@ -1,14 +1,13 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Car } from '@/models/car';
+import { Car, getCarPriceInCurrency } from '@/models/car';
 import { formatCurrencyValue, CurrencyCode } from '@/utils/currency';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 interface CarCardProps {
   car: Car;
-  currencyCode?: CurrencyCode;
+  currencyCode: CurrencyCode;
   isAffordable?: boolean;
   percentageAffordable?: number;
   monthsToSave?: number;
@@ -17,12 +16,14 @@ interface CarCardProps {
 
 const CarCard = ({ 
   car, 
-  currencyCode = 'USD', 
+  currencyCode, 
   isAffordable, 
   percentageAffordable, 
   monthsToSave, 
   onClick 
 }: CarCardProps) => {
+  const priceInCurrency = getCarPriceInCurrency(car, currencyCode);
+
   return (
     <motion.div
       whileHover={{ y: -5, boxShadow: "0 10px 30px -15px rgba(0,0,0,0.2)" }}
@@ -77,7 +78,7 @@ const CarCard = ({
         <CardHeader className="p-4 pb-2">
           <CardTitle className="text-xl">{car.name}</CardTitle>
           <CardDescription className="flex justify-between items-center">
-            <span className="text-lg font-semibold">{formatCurrencyValue(car.price, currencyCode)}</span>
+            <span className="text-lg font-semibold">{formatCurrencyValue(priceInCurrency, currencyCode)}</span>
           </CardDescription>
         </CardHeader>
         <CardContent className="p-4 pt-2 flex-grow">

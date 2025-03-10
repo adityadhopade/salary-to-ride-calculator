@@ -1,42 +1,68 @@
-
-export type CurrencyCode = 'USD' | 'EUR' | 'INR' | 'GBP';
+// Define supported currencies and their properties
+export type CurrencyCode = 'USD' | 'EUR' | 'GBP' | 'INR';
 
 export interface Currency {
   code: CurrencyCode;
   symbol: string;
   name: string;
-  rate: number; // Conversion rate from USD
 }
 
+// Exchange rates relative to USD
+const exchangeRates: Record<CurrencyCode, number> = {
+  'USD': 1.00,    // Base currency
+  'EUR': 0.93,    // 1 USD = 0.93 EUR
+  'GBP': 0.81,    // 1 USD = 0.81 GBP
+  'INR': 83.12,   // 1 USD = 83.12 INR
+};
+
 export const currencies: Currency[] = [
-  { code: 'USD', symbol: '$', name: 'US Dollar', rate: 1 },
-  { code: 'EUR', symbol: '€', name: 'Euro', rate: 0.92 },
-  { code: 'INR', symbol: '₹', name: 'Indian Rupee', rate: 83.5 },
-  { code: 'GBP', symbol: '£', name: 'British Pound', rate: 0.78 },
+  { code: 'USD', symbol: '$', name: 'US Dollar' },
+  { code: 'EUR', symbol: '€', name: 'Euro' },
+  { code: 'GBP', symbol: '£', name: 'British Pound' },
+  { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
 ];
 
 export const getCurrencyByCode = (code: CurrencyCode): Currency => {
-  return currencies.find(c => c.code === code) || currencies[0];
+  const currency = currencies.find(c => c.code === code);
+  if (!currency) throw new Error(`Unsupported currency: ${code}`);
+  return currency;
 };
 
-export const formatCurrencyValue = (amount: number, currencyCode: CurrencyCode = 'USD'): string => {
+/**
+ * Converts an amount from one currency to another
+ */
+export const convertCurrency = (
+  amount: number,
+  fromCurrency: CurrencyCode,
+  toCurrency: CurrencyCode
+): number => {
+  // If same currency, return original amount
+  if (fromCurrency === toCurrency) return amount;
+
+  // Convert to USD first (if not already USD)
+  const amountInUSD = fromCurrency === 'USD' 
+    ? amount 
+    : amount / exchangeRates[fromCurrency];
+
+  // Convert from USD to target currency
+  const convertedAmount = amountInUSD * exchangeRates[toCurrency];
+
+  // Round to 2 decimal places
+  return Number(convertedAmount.toFixed(2));
+};
+
+/**
+ * Formats a currency value according to the currency's conventions
+ */
+export const formatCurrencyValue = (amount: number, currencyCode: CurrencyCode): string => {
   const currency = getCurrencyByCode(currencyCode);
-  // Convert from USD to the selected currency
-  const value = amount * currency.rate;
   
-  return new Intl.NumberFormat('en-US', {
+  const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: currencyCode,
     minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(value);
-};
+    maximumFractionDigits: 2,
+  });
 
-export const convertCurrency = (amount: number, fromCurrency: CurrencyCode, toCurrency: CurrencyCode): number => {
-  const from = getCurrencyByCode(fromCurrency);
-  const to = getCurrencyByCode(toCurrency);
-  
-  // Convert to USD first, then to target currency
-  const amountInUSD = amount / from.rate;
-  return amountInUSD * to.rate;
+  return formatter.format(amount);
 };

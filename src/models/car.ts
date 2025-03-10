@@ -1,9 +1,10 @@
+import { CurrencyCode, convertCurrency } from '@/utils/currency';
 
 export interface Car {
   id: string;
   name: string;
   type: CarType;
-  price: number;
+  price: number;  // Base price in USD
   image: string;
   description: string;
 }
@@ -19,8 +20,8 @@ export const cars: Car[] = [
     id: "1",
     name: "Toyota Corolla",
     type: CarType.DailyDriver,
-    price: 25000,
-    image: "https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&q=80",
+    price: 25000, // This is in USD
+    image: "https://images.unsplash.com/photo-1626072557464-90403d788e8d?auto=format&fit=crop&q=80",
     description: "Reliable and economical daily commuter with excellent fuel efficiency."
   },
   {
@@ -28,7 +29,7 @@ export const cars: Car[] = [
     name: "Honda Civic",
     type: CarType.DailyDriver,
     price: 27000,
-    image: "https://images.unsplash.com/photo-1606152421802-db97b9c7a11b?auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1605816988069-b11383b50717?auto=format&fit=crop&q=80",
     description: "Popular compact car with modern features and dependable performance."
   },
   {
@@ -36,7 +37,7 @@ export const cars: Car[] = [
     name: "Mazda 3",
     type: CarType.DailyDriver,
     price: 30000,
-    image: "https://images.unsplash.com/photo-1597007030739-6d2e7172ce2e?auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1615849551444-c48741741ff2?auto=format&fit=crop&q=80",
     description: "Stylish daily driver with premium feel and engaging driving dynamics."
   },
   {
@@ -44,7 +45,7 @@ export const cars: Car[] = [
     name: "BMW M3",
     type: CarType.SportsCar,
     price: 75000,
-    image: "https://images.unsplash.com/photo-1580274455191-1c62238fa333?auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1586166417450-7a475d879c51?auto=format&fit=crop&q=80",
     description: "High-performance sports sedan with precision handling and luxury features."
   },
   {
@@ -52,7 +53,7 @@ export const cars: Car[] = [
     name: "Porsche 911",
     type: CarType.SportsCar,
     price: 120000,
-    image: "https://images.unsplash.com/photo-1611821064430-0d303500588a?auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1580274455191-1c62238fa333?auto=format&fit=crop&q=80",
     description: "Iconic sports car with perfect balance of performance and everyday usability."
   },
   {
@@ -84,7 +85,7 @@ export const cars: Car[] = [
     name: "McLaren 720S",
     type: CarType.Supercar,
     price: 300000,
-    image: "https://images.unsplash.com/photo-1632245889029-e406faaa34cd?auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1626141892008-498eacf87c79?auto=format&fit=crop&q=80",
     description: "Engineering excellence with futuristic design and blistering acceleration."
   }
 ];
@@ -95,4 +96,9 @@ export const getCarsByType = (type: CarType): Car[] => {
 
 export const getCarById = (id: string): Car | undefined => {
   return cars.find(car => car.id === id);
+};
+
+export const getCarPriceInCurrency = (car: Car, currencyCode: CurrencyCode): number => {
+  if (currencyCode === 'USD') return car.price;
+  return convertCurrency(car.price, 'USD', currencyCode);
 };

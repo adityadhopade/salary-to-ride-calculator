@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   Select, 
@@ -25,13 +24,17 @@ const CurrencySelect = ({ currencyCode, onCurrencyChange }: CurrencySelectProps)
         value={currencyCode}
         onValueChange={(value) => onCurrencyChange(value as CurrencyCode)}
       >
-        <SelectTrigger id="currency">
+        <SelectTrigger id="currency" className="bg-white">
           <SelectValue placeholder="Select currency" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="bg-white z-50 min-w-[200px]">
           {currencies.map((currency) => (
-            <SelectItem key={currency.code} value={currency.code}>
-              <span className="flex items-center">
+            <SelectItem 
+              key={currency.code} 
+              value={currency.code}
+              className="cursor-pointer hover:bg-gray-100"
+            >
+              <span className="flex items-center gap-2">
                 {currency.symbol} {currency.code}
               </span>
             </SelectItem>

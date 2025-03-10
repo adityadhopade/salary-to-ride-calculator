@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
@@ -14,7 +13,7 @@ import {
 } from '@/components/ui/select';
 import { CarType } from '@/models/car';
 import { Calculator, PercentIcon } from 'lucide-react';
-import { Currency, CurrencyCode, currencies } from '@/utils/currency';
+import { Currency, CurrencyCode, currencies, convertCurrency } from '@/utils/currency';
 import { formatCurrencyValue } from '@/utils/currency';
 
 interface SalaryCalculatorProps {
@@ -30,7 +29,8 @@ const SalaryCalculator = ({ onCalculate }: SalaryCalculatorProps) => {
   const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
-    setMonthlyBudget(salary * (budgetPercentage / 100));
+    const budget = salary * (budgetPercentage / 100);
+    setMonthlyBudget(budget);
   }, [salary, budgetPercentage]);
 
   const handleCalculate = () => {
