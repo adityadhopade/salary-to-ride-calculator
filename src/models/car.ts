@@ -99,6 +99,9 @@ export const getCarById = (id: string): Car | undefined => {
 };
 
 export const getCarPriceInCurrency = (car: Car, currencyCode: CurrencyCode): number => {
-  if (currencyCode === 'USD') return car.price;
-  return convertCurrency(car.price, 'USD', currencyCode);
+  const priceInUSD = car.price; // Assuming car.price is in USD
+  if (currencyCode === 'INR') {
+    return convertCurrency(priceInUSD, 'USD', 'INR'); // Convert to INR
+  }
+  return priceInUSD; // Return as is for other currencies
 };

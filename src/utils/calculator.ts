@@ -1,3 +1,5 @@
+import { convertCurrency } from './currency'; // Adjust the path if necessary
+import { CurrencyCode } from '../types'; // Import from types.ts
 
 export interface CarAffordabilityResult {
   canAffordPerMonth: boolean;
@@ -7,30 +9,32 @@ export interface CarAffordabilityResult {
 }
 
 export const calculateCarAffordability = (
-  monthlySalary: number,
+  salary: number,
   carPrice: number,
-  budgetPercentage: number = 30
+  budgetPercentage: number,
+  currencyCode: CurrencyCode
 ): CarAffordabilityResult => {
-  // Calculate the monthly budget for car expenses (default 30% of salary)
-  const monthlyBudget = monthlySalary * (budgetPercentage / 100);
-  
-  // Determine if the car can be afforded in a single month
-  const canAffordPerMonth = monthlyBudget >= carPrice;
-  
-  // Calculate what percentage of the car can be afforded per month
-  const percentagePerMonth = (monthlyBudget / carPrice) * 100;
-  
-  // Calculate how many months it would take to save for the car
-  const monthsToSave = Math.ceil(carPrice / monthlyBudget);
-  
-  // The amount that can be afforded with the monthly budget
-  const affordableAmount = monthlyBudget;
-  
+  let convertedPrice = carPrice;
+
+  // Convert USD to INR if necessary
+  if (currencyCode === 'INR') {
+    convertedPrice = convertCurrency(carPrice, 'USD', 'INR'); // Ensure this conversion is applied
+  }
+
+  const monthlyBudget = currencyCode === 'INR' 
+    ? convertCurrency(salary, 'USD', 'INR') * (budgetPercentage / 100) 
+    : salary * (budgetPercentage / 100);
+  const canAffordPerMonth = monthlyBudget >= convertedPrice;
+  const percentagePerMonth = (monthlyBudget / convertedPrice) * 100;
+
+  // Calculate months to save
+  const monthsToSave = canAffordPerMonth ? 0 : Math.ceil(convertedPrice / monthlyBudget);
+
   return {
     canAffordPerMonth,
     percentagePerMonth,
     monthsToSave,
-    affordableAmount
+    affordableAmount: monthlyBudget
   };
 };
 

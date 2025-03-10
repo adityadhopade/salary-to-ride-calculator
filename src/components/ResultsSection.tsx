@@ -1,10 +1,10 @@
-
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Car, CarType } from '@/models/car';
+import { Car, CarType, getCarPriceInCurrency } from '@/models/car';
 import CarCard from './CarCard';
 import { calculateCarAffordability } from '@/utils/calculator';
-import { CurrencyCode, formatCurrencyValue } from '@/utils/currency';
+import { CurrencyCode } from '../types';
+import { formatCurrencyValue } from '@/utils/currency';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface ResultsSectionProps {
@@ -29,10 +29,12 @@ const ResultsSection = ({
 
   // Calculate affordability for each car
   const carsWithAffordability = filteredCars.map(car => {
+    const priceInCurrency = getCarPriceInCurrency(car, currencyCode);
     const { canAffordPerMonth, percentagePerMonth, monthsToSave } = calculateCarAffordability(
       salary,
-      car.price,
-      budgetPercentage
+      priceInCurrency,
+      budgetPercentage,
+      currencyCode
     );
     
     return {
