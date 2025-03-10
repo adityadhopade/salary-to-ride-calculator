@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Car, CarType, cars } from '@/models/car';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
-import SalaryCalculator from '@/components/SalaryCalculator';
+import SalaryCalculator from '@/components/calculator/SalaryCalculator';
 import ResultsSection from '@/components/ResultsSection';
 import Footer from '@/components/Footer';
 import { toast } from "sonner";
