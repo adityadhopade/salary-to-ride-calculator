@@ -20,7 +20,7 @@ export const cars: Car[] = [
     name: "Toyota Corolla",
     type: CarType.DailyDriver,
     price: 25000,
-    image: "/toyota-corolla.webp",
+    image: "https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&q=80",
     description: "Reliable and economical daily commuter with excellent fuel efficiency."
   },
   {
@@ -28,7 +28,7 @@ export const cars: Car[] = [
     name: "Honda Civic",
     type: CarType.DailyDriver,
     price: 27000,
-    image: "/honda-civic.webp",
+    image: "https://images.unsplash.com/photo-1606152421802-db97b9c7a11b?auto=format&fit=crop&q=80",
     description: "Popular compact car with modern features and dependable performance."
   },
   {
@@ -36,7 +36,7 @@ export const cars: Car[] = [
     name: "Mazda 3",
     type: CarType.DailyDriver,
     price: 30000,
-    image: "/mazda-3.webp",
+    image: "https://images.unsplash.com/photo-1597007030739-6d2e7172ce2e?auto=format&fit=crop&q=80",
     description: "Stylish daily driver with premium feel and engaging driving dynamics."
   },
   {
@@ -44,7 +44,7 @@ export const cars: Car[] = [
     name: "BMW M3",
     type: CarType.SportsCar,
     price: 75000,
-    image: "/bmw-m3.webp",
+    image: "https://images.unsplash.com/photo-1580274455191-1c62238fa333?auto=format&fit=crop&q=80",
     description: "High-performance sports sedan with precision handling and luxury features."
   },
   {
@@ -52,7 +52,7 @@ export const cars: Car[] = [
     name: "Porsche 911",
     type: CarType.SportsCar,
     price: 120000,
-    image: "/porsche-911.webp",
+    image: "https://images.unsplash.com/photo-1611821064430-0d303500588a?auto=format&fit=crop&q=80",
     description: "Iconic sports car with perfect balance of performance and everyday usability."
   },
   {
@@ -60,7 +60,7 @@ export const cars: Car[] = [
     name: "Chevrolet Corvette",
     type: CarType.SportsCar,
     price: 65000,
-    image: "/chevrolet-corvette.webp",
+    image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80",
     description: "American sports car legend offering exceptional performance value."
   },
   {
@@ -68,7 +68,7 @@ export const cars: Car[] = [
     name: "Ferrari 488",
     type: CarType.Supercar,
     price: 350000,
-    image: "/ferrari-488.webp",
+    image: "https://images.unsplash.com/photo-1592198084033-aade902d1aae?auto=format&fit=crop&q=80",
     description: "Italian masterpiece blending cutting-edge technology with breathtaking design."
   },
   {
@@ -76,7 +76,7 @@ export const cars: Car[] = [
     name: "Lamborghini Huracán",
     type: CarType.Supercar,
     price: 320000,
-    image: "/lamborghini-huracan.webp",
+    image: "https://images.unsplash.com/photo-1580414057403-c5f451f30e1c?auto=format&fit=crop&q=80",
     description: "Dramatic styling with race-car performance and an unforgettable V10 engine."
   },
   {
@@ -84,7 +84,7 @@ export const cars: Car[] = [
     name: "McLaren 720S",
     type: CarType.Supercar,
     price: 300000,
-    image: "/mclaren-720s.webp",
+    image: "https://images.unsplash.com/photo-1632245889029-e406faaa34cd?auto=format&fit=crop&q=80",
     description: "Engineering excellence with futuristic design and blistering acceleration."
   }
 ];

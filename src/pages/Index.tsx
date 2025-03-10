@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Car, CarType, cars } from '@/models/car';
 import Header from '@/components/Header';
@@ -33,18 +33,6 @@ const Index = () => {
       toast.success("Calculation updated! Check out your new options.");
     }
   };
-
-  useEffect(() => {
-    // Add placeholder images for cars to avoid 404 errors
-    if (document.querySelector('img[src^="/"]')) {
-      const images = document.querySelectorAll('img[src^="/"]');
-      images.forEach(img => {
-        if (img instanceof HTMLImageElement) {
-          img.src = "https://placehold.co/800x450?text=Car+Image";
-        }
-      });
-    }
-  }, []);
 
   return (
     <div className="min-h-screen bg-white">

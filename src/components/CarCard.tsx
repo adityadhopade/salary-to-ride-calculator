@@ -58,11 +58,12 @@ const CarCard = ({ car, isAffordable, percentageAffordable, monthsToSave, onClic
             </motion.div>
           )}
           <motion.img
-            src={car.image || "https://placehold.co/800x450?text=Car+Image"}
+            src={car.image}
             alt={car.name}
             className="w-full h-full object-cover object-center transform"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.5 }}
+            loading="lazy"
           />
         </div>
         <CardHeader className="p-4 pb-2">
