@@ -18,37 +18,19 @@ const Header = () => {
           <span className="text-xl font-semibold tracking-tight">Salary-to-Ride</span>
         </motion.div>
 
-        <div className="flex items-center gap-6">
-          <nav className="hidden md:flex space-x-8">
-            <motion.a 
-              whileHover={{ y: -2 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              href="#calculator" 
-              className="text-sm font-medium hover:text-blue-500 transition-colors"
-            >
-              Calculator
-            </motion.a>
-            <motion.a 
-              whileHover={{ y: -2 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              href="#cars" 
-              className="text-sm font-medium hover:text-blue-500 transition-colors"
-            >
-              Cars
-            </motion.a>
-            <motion.a 
-              whileHover={{ y: -2 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              href="#about" 
-              className="text-sm font-medium hover:text-blue-500 transition-colors"
-            >
-              About
-            </motion.a>
-          </nav>
-        </div>
+        <nav className="hidden md:flex space-x-8">
+          <motion.a 
+            whileHover={{ y: -2 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            href="#calculator" 
+            className="text-sm font-medium hover:text-blue-500 transition-colors"
+          >
+            Calculator
+          </motion.a>
+        </nav>
       </motion.div>
     </header>
-)
+  );
 };
 
 export default Header;
