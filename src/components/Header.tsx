@@ -19,14 +19,7 @@ const Header = () => {
         </motion.div>
 
         <nav className="hidden md:flex space-x-8">
-          <motion.a 
-            whileHover={{ y: -2 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            href="#calculator" 
-            className="text-sm font-medium hover:text-blue-500 transition-colors"
-          >
-            Calculator
-          </motion.a>
+          {/* All navigation links have been removed */}
         </nav>
       </motion.div>
     </header>
