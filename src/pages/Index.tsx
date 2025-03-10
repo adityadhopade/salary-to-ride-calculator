@@ -7,7 +7,7 @@ import Hero from '@/components/Hero';
 import SalaryCalculator from '@/components/SalaryCalculator';
 import ResultsSection from '@/components/ResultsSection';
 import Footer from '@/components/Footer';
-import { toast } from '@/components/ui/sonner';
+import { toast } from "sonner";
 
 const Index = () => {
   const [showResults, setShowResults] = useState(false);
