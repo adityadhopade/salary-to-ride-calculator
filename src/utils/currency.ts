@@ -21,6 +21,7 @@ export const getCurrencyByCode = (code: CurrencyCode): Currency => {
 
 export const formatCurrencyValue = (amount: number, currencyCode: CurrencyCode = 'USD'): string => {
   const currency = getCurrencyByCode(currencyCode);
+  // Convert from USD to the selected currency
   const value = amount * currency.rate;
   
   return new Intl.NumberFormat('en-US', {
