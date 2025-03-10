@@ -60,7 +60,7 @@ const SalaryCalculator = ({ onCalculate }: SalaryCalculatorProps) => {
     >
       <h2 className="text-2xl font-semibold mb-6 flex items-center">
         <Calculator className="mr-2 h-6 w-6" />
-        Salary-to-Car Calculator
+        Salary-to-Ride Calculator
       </h2>
 
       <div className="space-y-6">
