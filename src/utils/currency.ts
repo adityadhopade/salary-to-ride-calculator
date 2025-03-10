@@ -1,5 +1,5 @@
 // Define supported currencies and their properties
-export type CurrencyCode = 'USD' | 'EUR' | 'GBP' | 'INR';
+export type CurrencyCode = 'USD' | 'EUR' | 'GBP';
 
 export interface Currency {
   code: CurrencyCode;
@@ -12,14 +12,14 @@ const exchangeRates: Record<CurrencyCode, number> = {
   'USD': 1.00,    // Base currency
   'EUR': 0.93,    // 1 USD = 0.93 EUR
   'GBP': 0.81,    // 1 USD = 0.81 GBP
-  'INR': 83.12,   // 1 USD = 83.12 INR
+  // 'INR': 83.12,   // 1 USD = 83.12 INR
 };
 
 export const currencies: Currency[] = [
   { code: 'USD', symbol: '$', name: 'US Dollar' },
   { code: 'EUR', symbol: '€', name: 'Euro' },
   { code: 'GBP', symbol: '£', name: 'British Pound' },
-  { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
+  // { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
 ];
 
 export const getCurrencyByCode = (code: CurrencyCode): Currency => {
