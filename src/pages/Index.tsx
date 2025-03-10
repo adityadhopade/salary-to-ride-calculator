@@ -8,19 +8,22 @@ import SalaryCalculator from '@/components/SalaryCalculator';
 import ResultsSection from '@/components/ResultsSection';
 import Footer from '@/components/Footer';
 import { toast } from "sonner";
+import { CurrencyCode } from '@/utils/currency';
 
 const Index = () => {
   const [showResults, setShowResults] = useState(false);
   const [salary, setSalary] = useState(0);
   const [budgetPercentage, setBudgetPercentage] = useState(0);
   const [selectedCarType, setSelectedCarType] = useState<CarType>(CarType.DailyDriver);
+  const [selectedCurrency, setSelectedCurrency] = useState<CurrencyCode>('USD');
   const [calculationsPerformed, setCalculationsPerformed] = useState(0);
   const resultsRef = useRef<HTMLDivElement>(null);
 
-  const handleCalculate = (salary: number, percentage: number, carType: CarType) => {
+  const handleCalculate = (salary: number, percentage: number, carType: CarType, currencyCode: CurrencyCode) => {
     setSalary(salary);
     setBudgetPercentage(percentage);
     setSelectedCarType(carType);
+    setSelectedCurrency(currencyCode);
     setCalculationsPerformed(prev => prev + 1);
     
     if (!showResults) {
@@ -62,6 +65,7 @@ const Index = () => {
                 salary={salary} 
                 budgetPercentage={budgetPercentage} 
                 carType={selectedCarType}
+                currencyCode={selectedCurrency}
                 key={calculationsPerformed}
               />
             </div>

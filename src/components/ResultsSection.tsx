@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Car, CarType } from '@/models/car';
 import CarCard from './CarCard';
-import { calculateCarAffordability, formatCurrency, formatPercentage } from '@/utils/calculator';
+import { calculateCarAffordability } from '@/utils/calculator';
+import { CurrencyCode, formatCurrencyValue } from '@/utils/currency';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface ResultsSectionProps {
@@ -11,9 +12,16 @@ interface ResultsSectionProps {
   salary: number;
   budgetPercentage: number;
   carType: CarType;
+  currencyCode: CurrencyCode;
 }
 
-const ResultsSection = ({ cars, salary, budgetPercentage, carType }: ResultsSectionProps) => {
+const ResultsSection = ({ 
+  cars, 
+  salary, 
+  budgetPercentage, 
+  carType,
+  currencyCode 
+}: ResultsSectionProps) => {
   const [selectedTab, setSelectedTab] = useState<CarType>(carType);
   const monthlyBudget = salary * (budgetPercentage / 100);
 
@@ -75,7 +83,7 @@ const ResultsSection = ({ cars, salary, budgetPercentage, carType }: ResultsSect
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          Based on your monthly salary of {formatCurrency(salary)} with {budgetPercentage}% ({formatCurrency(monthlyBudget)}/month) allocated for car expenses.
+          Based on your monthly salary of {formatCurrencyValue(salary, currencyCode)} with {budgetPercentage}% ({formatCurrencyValue(monthlyBudget, currencyCode)}/month) allocated for car expenses.
         </motion.p>
       </motion.div>
 
@@ -104,6 +112,7 @@ const ResultsSection = ({ cars, salary, budgetPercentage, carType }: ResultsSect
                     <CarCard 
                       key={car.id} 
                       car={car} 
+                      currencyCode={currencyCode}
                       isAffordable={car.canAfford}
                       percentageAffordable={car.percentagePerMonth}
                       monthsToSave={car.monthsToSave}

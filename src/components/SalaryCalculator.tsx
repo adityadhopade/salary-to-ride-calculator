@@ -5,18 +5,27 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from '@/components/ui/select';
 import { CarType } from '@/models/car';
-import { DollarSign, Calculator, PercentIcon } from 'lucide-react';
-import { calculateCarAffordability, formatCurrency, formatPercentage } from '@/utils/calculator';
+import { Calculator, PercentIcon } from 'lucide-react';
+import { Currency, CurrencyCode, currencies } from '@/utils/currency';
+import { formatCurrencyValue } from '@/utils/currency';
 
 interface SalaryCalculatorProps {
-  onCalculate: (salary: number, percentage: number, carType: CarType) => void;
+  onCalculate: (salary: number, percentage: number, carType: CarType, currencyCode: CurrencyCode) => void;
 }
 
 const SalaryCalculator = ({ onCalculate }: SalaryCalculatorProps) => {
   const [salary, setSalary] = useState<number>(5000);
   const [budgetPercentage, setBudgetPercentage] = useState<number>(30);
   const [selectedCarType, setSelectedCarType] = useState<CarType>(CarType.DailyDriver);
+  const [currencyCode, setCurrencyCode] = useState<CurrencyCode>('USD');
   const [monthlyBudget, setMonthlyBudget] = useState<number>(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -27,7 +36,7 @@ const SalaryCalculator = ({ onCalculate }: SalaryCalculatorProps) => {
   const handleCalculate = () => {
     setIsAnimating(true);
     setTimeout(() => {
-      onCalculate(salary, budgetPercentage, selectedCarType);
+      onCalculate(salary, budgetPercentage, selectedCarType, currencyCode);
       setIsAnimating(false);
     }, 500);
   };
@@ -35,6 +44,11 @@ const SalaryCalculator = ({ onCalculate }: SalaryCalculatorProps) => {
   const handleSalaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '');
     setSalary(value ? parseInt(value) : 0);
+  };
+
+  const getCurrencySymbol = (code: CurrencyCode): string => {
+    const currency = currencies.find(c => c.code === code);
+    return currency ? currency.symbol : '$';
   };
 
   return (
@@ -50,24 +64,51 @@ const SalaryCalculator = ({ onCalculate }: SalaryCalculatorProps) => {
       </h2>
 
       <div className="space-y-6">
-        <div className="space-y-3">
-          <Label htmlFor="salary" className="text-sm font-medium">
-            Your Monthly Salary
-          </Label>
-          <div className="relative">
-            <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 h-4 w-4" />
-            <Input
-              id="salary"
-              type="text"
-              value={salary.toString()}
-              onChange={handleSalaryChange}
-              className="pl-10"
-              placeholder="Enter your monthly salary"
-            />
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="space-y-3 md:col-span-3">
+            <Label htmlFor="salary" className="text-sm font-medium">
+              Your Monthly Salary
+            </Label>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+                {getCurrencySymbol(currencyCode)}
+              </span>
+              <Input
+                id="salary"
+                type="text"
+                value={salary.toString()}
+                onChange={handleSalaryChange}
+                className="pl-10"
+                placeholder="Enter your monthly salary"
+              />
+            </div>
+            <p className="text-sm text-muted-foreground">
+              This is your monthly income before tax.
+            </p>
           </div>
-          <p className="text-sm text-muted-foreground">
-            This is your monthly income before tax.
-          </p>
+          
+          <div className="space-y-3">
+            <Label htmlFor="currency" className="text-sm font-medium">
+              Currency
+            </Label>
+            <Select 
+              value={currencyCode}
+              onValueChange={(value) => setCurrencyCode(value as CurrencyCode)}
+            >
+              <SelectTrigger id="currency">
+                <SelectValue placeholder="Select currency" />
+              </SelectTrigger>
+              <SelectContent>
+                {currencies.map((currency) => (
+                  <SelectItem key={currency.code} value={currency.code}>
+                    <span className="flex items-center">
+                      {currency.symbol} {currency.code}
+                    </span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <div className="space-y-3">
@@ -120,7 +161,7 @@ const SalaryCalculator = ({ onCalculate }: SalaryCalculatorProps) => {
               animate={{ opacity: 1, y: 0 }}
               className="text-lg font-semibold"
             >
-              {formatCurrency(monthlyBudget)}
+              {formatCurrencyValue(monthlyBudget, currencyCode)}
             </motion.span>
           </div>
 
